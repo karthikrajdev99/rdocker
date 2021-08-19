@@ -18,8 +18,8 @@ ENV LANGUAGE en_US.UTF-8
 # Install R-base packages
 RUN R -e "install.packages(c('shiny', 'rmarkdown'))"
 
-COPY Rprofile.site /usr/lib/R/etc/
-WORKDIR /code
-COPY ./shinyproxy /code
+ADD https://github.com/openanalytics/shinyproxy-demo/blob/master/Rprofile.site  /usr/lib/R/etc/
+
+RUN R -e "install.packages('shinyproxy', repos='https://github.com/openanalytics/shinyproxy-demo/blob/master/shinyproxy_0.0.1.tar.gz', type='source')"
 
 RUN R -e "shinyproxy::run_01_hello()"
